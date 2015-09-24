@@ -1,0 +1,108 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: criativa
+ * Date: 24/09/15
+ * Time: 14:30
+ */
+
+namespace App\Service;
+
+use App\Models\Event;
+use App\Models\Subscribe;
+
+class EventManager
+{
+    /**
+     * @param Event $event
+     * @param array $data
+     * @return bool|static
+     */
+    public function subscribe(Event $event, array $data)
+    {
+        $requesterCount = $this->countRequesters($data);
+        $subscribers = $event->subscribers;
+        $count = 0;
+        foreach($subscribers as $subscriber){
+            $count += $this->verifyDad($subscriber);
+            $count += $this->verifyMom($subscriber);
+            $count += $this->verifyChildren($subscriber);
+        }
+
+        if($count <= $event->vagas + $requesterCount){
+            $success = Subscribe::create(array_merge(['event_id' => $event->id], $data));
+            if($success)
+                return 'Cadastrado com sucesso';
+            return 'Ocorreu um erro';
+        }
+
+        return 'Limite de vagas atingido';
+    }
+
+    /**
+     * @param array $data
+     * @return int
+     */
+    private function countRequesters(array $data)
+    {
+        $count = 0;
+        if(isset($data['nome_pai']))
+            $count++;
+        if(isset($data['nome_mae']))
+            $count++;
+        if(isset($data['filhos']))
+            $count += $data['filhos'];
+
+        return $count;
+    }
+
+    /**
+     * @param Subscribe $subscriber
+     * @return int
+     */
+    private function verifyDad(Subscribe $subscriber)
+    {
+        if($subscriber->nomePai != '')
+            return 1;
+        return 0;
+    }
+
+    /**
+     * @param Subscribe $subscriber
+     * @return int
+     */
+    private function verifyMom(Subscribe $subscriber)
+    {
+        if($subscriber->nomeMae != '')
+            return 1;
+        return 0;
+    }
+
+    /**
+     * @param Subscribe $subscriber
+     * @return mixed
+     */
+    private function verifyChildren(Subscribe $subscriber)
+    {
+        return $subscriber->filhos;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getEvent($id)
+    {
+        return Event::findOrFail($id);
+    }
+
+    /**
+     * Obtém os inscritos de um determinado evento
+     * @param Event $event
+     * @return mixed
+     */
+    public function getSubscribers(Event $event)
+    {
+        return $event->subscribers->all();
+    }
+}
