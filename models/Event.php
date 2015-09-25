@@ -15,7 +15,7 @@ class Event extends Eloquent
 {
 
     protected $table = 'criobanco_evento';
-    protected $fillable = ['horario', 'vagas'];
+    protected $fillable = ['dia','horario', 'vagas'];
 
     public function subscribers()
     {

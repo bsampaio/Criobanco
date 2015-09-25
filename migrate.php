@@ -18,6 +18,7 @@ if(!Capsule::schema()->hasTable('criobanco_evento')){
 
         $table->increments('id');
         $table->timestamps();
+        $table->string('dia');
         $table->string('horario');
         $table->integer('vagas')->unsigned();
     });

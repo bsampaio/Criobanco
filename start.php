@@ -15,19 +15,23 @@ require_once 'migrate.php';
 
 $events = [
     [
-        "horario" => "9:50",
+        "dia"     => "24/10",
+        "horario" => "9:00 ~ 12:00",
         "vagas"   => 300
     ],
     [
-        "horario" => "11:50",
+        "dia"     => "24/10",
+        "horario" => "14:00 ~ 17:00",
         "vagas"   => 300
     ],
     [
-        "horario" => "13:00",
+        "dia"     => "25/10",
+        "horario" => "9:00 ~ 12:00",
         "vagas"   => 300
     ],
     [
-        "horario" => "15:00",
+        "dia"     => "25/10",
+        "horario" => "14:00 ~ 17:00",
         "vagas"   => 300
     ]
 ];
