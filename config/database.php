@@ -30,7 +30,7 @@ $connections = [
 
 if(!empty($heroku_psql['path'])){
     $connections['heroku'] = [
-        'driver'    => 'psql',
+        'driver'    => 'pgsql',
         'host'      => $heroku_psql['host'],
         'database'  => ltrim($heroku_psql["path"],'/'),
         'username'  => $heroku_psql['user'],
