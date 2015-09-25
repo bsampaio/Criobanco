@@ -24,9 +24,9 @@ $subscriptionData = [
     'nome_pai'     => $_POST['nome_pai'],
     'telefone_pai' => $_POST['telefone_pai'],
     'email_pai'    => $_POST['email_pai'],
-    'nome_mae'     => $_POST['nome_pai'],
-    'telefone_mae' => $_POST['telefone_pai'],
-    'email_mae'    => $_POST['email_pai'],
+    'nome_mae'     => $_POST['nome_mae'],
+    'telefone_mae' => $_POST['telefone_mae'],
+    'email_mae'    => $_POST['email_mae'],
     'filhos'       => $_POST['filhos']
 ];
 
