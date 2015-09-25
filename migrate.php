@@ -12,10 +12,10 @@ require_once 'config/database.php';
 
 exec("php --version > version.txt");
 
-use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 
-Manager::schema()->create('criobanco_evento', function(Blueprint $table){
+Capsule::schema()->create('criobanco_evento', function(Blueprint $table){
 
     $table->increments('id');
     $table->timestamps();
@@ -23,7 +23,7 @@ Manager::schema()->create('criobanco_evento', function(Blueprint $table){
     $table->integer('vagas')->unsigned();
 });
 
-Manager::schema()->create('criobanco_inscricao', function(Blueprint $table){
+Capsule::schema()->create('criobanco_inscricao', function(Blueprint $table){
 
     $table->increments('id');
     $table->timestamps();
