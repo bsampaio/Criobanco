@@ -11,6 +11,8 @@ require_once 'config/database.php';
 
 use App\Service\EventManager;
 
+header("Access-Control-Allow-Origin: *");
+
 $eventManager = new EventManager;
 
 //Aborta o processo, caso não exista o id do evento.

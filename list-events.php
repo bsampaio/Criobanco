@@ -11,4 +11,5 @@ require_once 'config/database.php';
 
 use App\Models\Event;
 
+header("Access-Control-Allow-Origin: *");
 echo json_encode(Event::all()->toArray());
