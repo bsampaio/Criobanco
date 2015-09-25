@@ -21,16 +21,18 @@ class EventManager
     public function subscribe(Event $event, array $data)
     {
         $requesterCount = $this->countRequesters($data);
+        
         $subscribers = $event->subscribers;
+        
         $count = 0;
         foreach($subscribers as $subscriber){
             $count += $this->verifyDad($subscriber);
             $count += $this->verifyMom($subscriber);
             $count += $this->verifyChildren($subscriber);
         }
-
-        if($count <= $event->vagas + $requesterCount){
-            $success = Subscribe::create(array_merge(['event_id' => $event->id], $data));
+        
+        if($count + $requesterCount <= $event->vagas){
+            $success = Subscribe::create(array_merge(['evento_id' => $event->id], $data));
             if($success)
                 return 'Cadastrado com sucesso';
             return 'Ocorreu um erro';
@@ -62,7 +64,7 @@ class EventManager
      */
     private function verifyDad(Subscribe $subscriber)
     {
-        if($subscriber->nomePai != '')
+        if($subscriber->nome_pai != '')
             return 1;
         return 0;
     }
@@ -73,14 +75,14 @@ class EventManager
      */
     private function verifyMom(Subscribe $subscriber)
     {
-        if($subscriber->nomeMae != '')
+        if($subscriber->nome_mae != '')
             return 1;
         return 0;
     }
 
     /**
      * @param Subscribe $subscriber
-     * @return mixed
+     * @return int
      */
     private function verifyChildren(Subscribe $subscriber)
     {

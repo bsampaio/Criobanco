@@ -14,11 +14,11 @@ use App\Service\EventManager;
 $eventManager = new EventManager;
 
 //Aborta o processo, caso não exista o id do evento.
-if(!isset($_POST['event_id'])){
+if(!isset($_POST['evento_id'])){
     return;
 }
 
-$id = $_POST['event_id'];
+$id = $_POST['evento_id'];
 $event = $eventManager->getEvent($id);
 $subscriptionData = [
     'nome_pai'     => $_POST['nome_pai'],

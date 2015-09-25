@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Subscribe extends Eloquent
 {
 
-    protected $table = 'criobanco_inscricoes';
+    protected $table = 'criobanco_inscricao';
     protected $fillable = [
         'evento_id',
         'nome_pai',

@@ -23,7 +23,7 @@ if(!Capsule::schema()->hasTable('criobanco_evento')){
     });
 }
 
-if(!Capsule::schema()->hasTable('criobanco_evento')){
+if(!Capsule::schema()->hasTable('criobanco_inscricao')){
     Capsule::schema()->create('criobanco_inscricao', function(Blueprint $table){
 
         $table->increments('id');
@@ -31,10 +31,10 @@ if(!Capsule::schema()->hasTable('criobanco_evento')){
         $table->integer('evento_id')->unsigned();
         $table->foreign('evento_id')->references('id')->on('criobanco_evento');
         $table->string('email_pai',150);
-        $table->string('name_pai', 200);
+        $table->string('nome_pai', 200);
         $table->string('telefone_pai', 30);
         $table->string('email_mae',150);
-        $table->string('name_mae', 200);
+        $table->string('nome_mae', 200);
         $table->string('telefone_mae', 30);
         $table->integer('filhos')->unsigned();
     });
