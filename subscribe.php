@@ -37,32 +37,32 @@ $rules = [
     'filhos'
 ];
 
-function validate($rules, $data){
-    $valid = true;
-    foreach($rules as $rule){
-        $optional = is_array($rule);
-        if($optional){
-            $valid &= validateOptions($rule, $data);
-        }else{
-            $valid &= (isset($data[$rule]) && $data[$rule] != '');
-        }
-    }
-    return $valid;
-}
-
-function validateOptions($rules, $data){
-    $valid = false;
-    foreach($rules as $rule){
-        $valid |= validate($rule, $data);
-    }
-
-    return $valid;
-}
-
-if(!validate($rules, $_POST)) {
-    echo 'Dados requiridos inválidos ou incompletos!';
-    return;
-}
+//function validate($rules, $data){
+//    $valid = true;
+//    foreach($rules as $rule){
+//        $optional = is_array($rule);
+//        if($optional){
+//            $valid &= validateOptions($rule, $data);
+//        }else{
+//            $valid &= (isset($data[$rule]) && $data[$rule] != '');
+//        }
+//    }
+//    return $valid;
+//}
+//
+//function validateOptions($rules, $data){
+//    $valid = false;
+//    foreach($rules as $rule){
+//        $valid |= validate($rule, $data);
+//    }
+//
+//    return $valid;
+//}
+//
+//if(!validate($rules, $_POST)) {
+//    echo 'Dados requiridos inválidos ou incompletos!';
+//    return;
+//}
 
 $id = $_POST['evento_id'];
 $event = $eventManager->getEvent($id);
