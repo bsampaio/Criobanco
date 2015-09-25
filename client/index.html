@@ -1,0 +1,217 @@
+<html ng-app="Criobanco">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+        </script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <!-- Swal -->
+        <script src="swal/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="swal/dist/sweetalert.css">
+
+        
+        <style type="text/css">
+          .ajax-loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -64px; /* -1 * image width / 2 */
+            margin-top: -64px; /* -1 * image height / 2 */
+          }
+          body {
+            margin-top: 30px;
+          }
+        </style>
+
+
+        <script>
+            angular.module('Criobanco', []);
+            angular.module('Criobanco').controller("EventController", function($scope, $http) {
+                $scope.app = "Criobanco";
+                $scope.urls = {
+                    "listEvents" : "http://criobanco.herokuapp.com/list-events.php",
+                    "subscribe"   : "http://criobanco.herokuapp.com/subscribe.php",
+                };
+                $scope.events = [];
+                $scope.loading = false;
+                $scope.load = function(){
+                    $scope.loading = true;
+                    $http.get($scope.urls.listEvents)
+                            .success(function(data){
+                                $scope.events = data;
+                                $scope.loading = false;
+                            })
+                            .error(function(data){
+                                console.log("Error: \n");
+                                console.log(data);
+                            });
+                };
+
+                $scope.generateEventTitle = function(event){
+                  return event.dia + " ("+event.horario+")";
+                };
+
+                $scope.formData = {};
+
+                $scope.subscribe = function(){
+                  console.log($scope.formData);
+                  $http({
+                    method  : "POST",
+                    url     : $scope.urls.subscribe,
+                    data    : $.param($scope.formData),
+                    headers : { 'Content-Type' : 'application/x-www-form-urlencoded'}
+                  })
+                  .success(function(data) {
+                    console.log(data);
+                    swal({
+                      title: "Informação",
+                      text: data,
+                      timer: 2000,
+                      showConfirmButton: true
+                    });
+                    $scope.formData = {};
+                  })
+                  .error(function(data) {
+                    console.log("Error: \n");
+                    console.log(data);
+                    swal({
+                      title: "Erro!",
+                      text: data,
+                      timer: 2000,
+                      showConfirmButton: true
+                    });
+                  });
+                }
+
+                $scope.formValid = function(){
+                  var obj = $scope.formData;
+                  for (var prop in obj) {
+                    if( obj.hasOwnProperty( prop ) ) {
+                      if(obj[prop].$invalid)
+                        return false;
+                    } 
+                  }
+                  return true;
+                }
+                
+                $scope.load();
+            } )
+        </script>
+        <title>Cadastro no evento do Criobanco</title>
+    </head>
+    <body ng-controller="EventController">
+
+    <div class="container">
+      <div ng-hide="loading" style="width: 100%;">
+        
+        <form class="col-sm-12">
+          <div class="row">
+            <div class="form-group" style="padding-left:15px;">
+              <h3>Dados de inscrição</h3>
+              <br/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-sm-4">
+
+                <label for="nome_pai" class="label-control">Nome do Pai</label>
+                <input placeholder="" id="nome_pai" 
+                       type="text" class="validate form-control"
+                       ng-model="formData.nome_pai" required>
+              </div>
+              <div class="col-sm-4">
+
+                <label for="telefone_pai" class="label-control">Telefone do Pai</label>
+                <input placeholder="" id="telefone_pai" 
+                       type="text" class="validate form-control"
+                       ng-model="formData.telefone_pai" required>
+              </div>
+              <div class="col-sm-4">
+
+                <label for="email_pai" class="label-control">Email do pai</label>
+                <input placeholder="" id="email_pai" 
+                       type="email" class="validate form-control"
+                       ng-model="formData.email_pai" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-sm-4">
+                <label for="nome_mae" class="label-control">Nome da Mãe</label>
+                <input placeholder="" id="nome_mae" 
+                       type="text" class="validate form-control"
+                       ng-model="formData.nome_mae" required>
+              </div>
+              <div class="col-sm-4">
+
+                <label for="telefone_mae" class="label-control">Telefone da Mãe</label>
+                <input placeholder="" id="telefone_mae" 
+                       type="text" class="validate form-control"
+                       ng-model="formData.telefone_mae" required>
+              </div>
+              <div class="col-sm-4">
+
+                <label for="email_mae" class="label-control">Email da Mãe</label>
+                <input placeholder="" id="email_mae" 
+                       type="email" class="validate form-control"
+                       ng-model="formData.email_mae" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <label for="filhos" class="label-control">Filhos</label>
+                <input placeholder="" id="filhos" 
+                       type="number" class="validate form-control"
+                       ng-model="formData.filhos" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <label class="left-align">Evento</label>
+                <select id="event" class="form-control"
+                        ng-model="formData.evento_id"
+                        required>
+                  <option value="{{e.id}}" name="event_id" 
+                          ng-repeat="e in events track by e.id" >
+                    {{generateEventTitle(e)}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <br/>
+                <button class="btn btn-primary" 
+                        ng-click="subscribe()"
+                        ng-disable="!formValid()">Enviar</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group" style="padding-left:15px;">
+              <br/>
+            <h3>Como chegar lá?</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d936.5490145195012!2d-40.185267399999994!3d-20.167839001570528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDEwJzA0LjIiUyA0MMKwMTEnMDcuMCJX!5e0!3m2!1spt-BR!2sbr!4v1443207704091" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div ng-show="loading" class="valign center" style="width: 100%">
+        <img class="ajax-loader" src="./preloader.gif">
+      </div>
+    </div>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
