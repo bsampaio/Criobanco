@@ -60,7 +60,7 @@ function validateOptions($rules, $data){
 }
 
 if(!validate($rules, $_POST)) {
-    echo 'Invalid data!';
+    echo 'Dados requiridos inválidos ou incompletos!';
     return;
 }
 
