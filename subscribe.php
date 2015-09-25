@@ -6,6 +6,9 @@
  * Time: 14:20
  */
 
+require_once 'vendor/autoload.php';
+require_once 'config/database.php';
+
 use App\Service\EventManager;
 
 $eventManager = new EventManager;
