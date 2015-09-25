@@ -35,10 +35,13 @@ class EventManager
             $success = Subscribe::create(array_merge(['evento_id' => $event->id], $data));
             if($success)
                 return 'Cadastrado com sucesso';
-            return 'Ocorreu um erro';
+
+            header('HTTP/1.1 500 Internal Server Error');
+            return 'Ocorreu um erro ao salvar os dados';
         }
 
-        return 'Limite de vagas atingido';
+        header('HTTP/1.1 500 Internal Server Error');
+        return 'Limite de vagas atingido. Por favor, escolha um outro horário';
     }
 
     /**
