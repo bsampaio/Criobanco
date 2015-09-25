@@ -20,6 +20,50 @@ if(!isset($_POST['evento_id'])){
     return;
 }
 
+$rules = [
+    'evento_id',
+    [
+        [
+            'nome_pai',
+            'telefone_pai',
+            'email_pai'
+        ],
+        [
+            'nome_mae',
+            'telefone_mae',
+            'email_mae'
+        ],
+    ],
+    'filhos'
+];
+
+function validate($rules, $data){
+    $valid = true;
+    foreach($rules as $rule){
+        $optional = is_array($rule);
+        if($optional){
+            $valid &= validateOptions($rule, $data);
+        }else{
+            $valid &= (isset($data[$rule]) && $data[$rule] != '');
+        }
+    }
+    return $valid;
+}
+
+function validateOptions($rules, $data){
+    $valid = false;
+    foreach($rules as $rule){
+        $valid |= validate($rule, $data);
+    }
+
+    return $valid;
+}
+
+if(!validate($rules, $_POST)) {
+    echo 'Invalid data!';
+    return;
+}
+
 $id = $_POST['evento_id'];
 $event = $eventManager->getEvent($id);
 $subscriptionData = [
