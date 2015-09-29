@@ -38,42 +38,43 @@ $rules = [
     'filhos'
 ];
 
-//function validate($rules, $data){
-//    $valid = true;
-//    foreach($rules as $rule){
-//        $optional = is_array($rule);
-//        if($optional){
-//            $valid &= validateOptions($rule, $data);
-//        }else{
-//            $valid &= (isset($data[$rule]) && $data[$rule] != '');
-//        }
-//    }
-//    return $valid;
-//}
-//
-//function validateOptions($rules, $data){
-//    $valid = false;
-//    foreach($rules as $rule){
-//        $valid |= validate($rule, $data);
-//    }
-//
-//    return $valid;
-//}
-//
-//if(!validate($rules, $_POST)) {
-//    echo 'Dados requiridos inválidos ou incompletos!';
-//    return;
-//}
+function validate($rules, $data){
+    $valid = true;
+    foreach($rules as $rule){
+        $optional = is_array($rule);
+        if($optional){
+            $valid &= validateOptions($rule, $data);
+        }else{
+            $valid &= (isset($data[$rule]) && $data[$rule] != '');
+        }
+    }
+    return $valid;
+}
+
+function validateOptions($rules, $data){
+    $valid = false;
+    foreach($rules as $rule){
+        $valid |= validate($rule, $data);
+    }
+
+    return $valid;
+}
+
+if(!validate($rules, $_POST)) {
+    header('HTTP/1.1 500 Internal Server Error');
+    echo 'Dados requiridos inválidos ou incompletos!';
+    return;
+}
 
 $id = $_POST['evento_id'];
 $event = $eventManager->getEvent($id);
 $subscriptionData = [
-    'nome_pai'     => $_POST['nome_pai'],
-    'telefone_pai' => $_POST['telefone_pai'],
-    'email_pai'    => $_POST['email_pai'],
-    'nome_mae'     => $_POST['nome_mae'],
-    'telefone_mae' => $_POST['telefone_mae'],
-    'email_mae'    => $_POST['email_mae'],
+    'nome_pai'     => isset($_POST['nome_pai']) ? $_POST['nome_pai'] : null,
+    'telefone_pai' => isset($_POST['telefone_pai']) ? $_POST['telefone_pai'] : null,
+    'email_pai'    => isset($_POST['email_pai']) ? $_POST['email_pai'] : null,
+    'nome_mae'     => isset($_POST['nome_mae']) ? $_POST['nome_mae'] : null,
+    'telefone_mae' => isset($_POST['telefone_mae']) ? $_POST['telefone_mae'] : null,
+    'email_mae'    => isset($_POST['email_mae']) ? $_POST['email_mae'] : null,
     'filhos'       => $_POST['filhos']
 ];
 

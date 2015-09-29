@@ -31,12 +31,12 @@ if(!Capsule::schema()->hasTable('criobanco_inscricao')){
         $table->timestamps();
         $table->integer('evento_id')->unsigned();
         $table->foreign('evento_id')->references('id')->on('criobanco_evento');
-        $table->string('email_pai',150);
-        $table->string('nome_pai', 200);
-        $table->string('telefone_pai', 30);
-        $table->string('email_mae',150);
-        $table->string('nome_mae', 200);
-        $table->string('telefone_mae', 30);
+        $table->string('email_pai',150)->nullable();
+        $table->string('nome_pai', 200)->nullable();
+        $table->string('telefone_pai', 30)->nullable();
+        $table->string('email_mae',150)->nullable();
+        $table->string('nome_mae', 200)->nullable();
+        $table->string('telefone_mae', 30)->nullable();
         $table->integer('filhos')->unsigned();
     });
 }
