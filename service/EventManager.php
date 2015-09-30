@@ -34,13 +34,17 @@ class EventManager
         if($count + $requesterCount <= $event->vagas){
 
             try {
-                Subscribe::create(array_merge(['evento_id' => $event->id], $data));
+                $subscribe = Subscribe::create(array_merge(['evento_id' => $event->id], $data));
             } catch(\Exception $e) {
                 header('HTTP/1.1 500 Internal Server Error');
                 return 'Ocorreu um erro ao salvar os dados';
             }
 
-            return 'Cadastrado com sucesso';
+            $event = $subscribe->event;
+            $successResponse = 'Não se esqueça de marcar o endereço, sua data e a hora escolhida. Até lá!<br/><br/>'.
+                               "Cadastrado em: $event->dia - $event->horario";
+
+            return $successResponse;
         }
 
         header('HTTP/1.1 500 Internal Server Error');

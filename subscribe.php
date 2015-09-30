@@ -15,12 +15,6 @@ header("Access-Control-Allow-Origin: *");
 
 $eventManager = new EventManager;
 
-//Aborta o processo, caso não exista o id do evento.
-if(!isset($_POST['evento_id'])){
-    header('HTTP/1.1 500 Internal Server Error');
-    echo "Evento não selecionado ou não encontrado";
-}
-
 $rules = [
     'evento_id',
     [

@@ -67,9 +67,11 @@
                   .success(function(data) {
                     console.log(data);
                     swal({
-                      title: "Informação",
+                      title: "Obrigado por confirmar sua presença.",
                       text: data,
-                      timer: 2000,
+                      type: 'success',
+                      html: true,
+                      timer: 10000,
                       showConfirmButton: true
                     });
                     $scope.formData = {};
@@ -80,7 +82,7 @@
                     swal({
                       title: "Erro!",
                       text: data,
-                      timer: 2000,
+                      timer: 10000,
                       showConfirmButton: true
                     });
                   });
@@ -108,6 +110,9 @@
       <div ng-hide="loading" style="width: 100%;">
         
         <form class="col-sm-12">
+          <div class="row" id="headerimg">
+              <img class="img-responsive" src="img/header.jpg">
+          </div>
           <div class="row">
             <div class="form-group" style="padding-left:15px;">
               <h3>Dados de inscrição</h3>
