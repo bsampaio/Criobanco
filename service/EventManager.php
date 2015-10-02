@@ -41,7 +41,7 @@ class EventManager
             }
 
             $event = $subscribe->event;
-            $successResponse = 'Não se esqueça de marcar o endereço, sua data e a hora escolhida. Até lá!<br/><br/>'.
+            $successResponse = 'Não se esqueça de anotar o endereço, sua data e a hora escolhida. Até lá!<br/><br/>'.
                                "Cadastrado em: $event->dia - $event->horario";
 
             return $successResponse;
